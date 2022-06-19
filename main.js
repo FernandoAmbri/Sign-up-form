@@ -9,9 +9,9 @@ const showErrorNumber = document.querySelector(".validar-numero");
 
 function passwordMatch() {
   if (password.value !== confirmPassword.value) {
-    inputMessage(showErrorMessage, "*Password do not match");
+    inputMessage(showErrorMessage, password, "*Password do not match");
   } else {
-    inputMessage(showErrorMessage, "");
+    inputMessage(showErrorMessage, password, "");
   }
 }
 
@@ -31,21 +31,23 @@ function validarPassword(password) {
   return regex.test(password);
 }
 
-function inputMessage(element, message) {
+function inputMessage(element, input, message) {
   if (message !== "") {
     element.classList.add("error-message");
     element.textContent = message;
     element.style.display = "block";
+    input.classList.add("input-error");
   } else {
     element.style.display = "none";
+    input.classList.remove("input-error");
   }
 }
 
 password.addEventListener("blur", (input) => {
   if (input.target.value === "") {
-    inputMessage(showErrorMessage, "");
+    inputMessage(showErrorMessage, password, "");
   } else if (!validarPassword(input.target.value)) {
-    inputMessage(showErrorMessage, "*Password is not correct");
+    inputMessage(showErrorMessage, password, "*Password is not correct");
   } else {
     password.onchange = confirmPassword.onkeyup = passwordMatch;
   }
@@ -53,9 +55,9 @@ password.addEventListener("blur", (input) => {
 
 email.addEventListener("blur", (input) => {
   if (input.target.value === "") {
-    inputMessage(showErrorEmail, "");
+    inputMessage(showErrorEmail, email, "");
   } else if (!validarCorreo(input.target.value)) {
-    inputMessage(showErrorEmail, "*Email is not correct");
+    inputMessage(showErrorEmail, email, "*Email is not correct");
   } else {
     inputMessage(showErrorEmail, "");
   }
@@ -63,11 +65,11 @@ email.addEventListener("blur", (input) => {
 
 phoneNumber.addEventListener("blur", (input) => {
   if (input.target.value === "") {
-    inputMessage(showErrorNumber, "");
+    inputMessage(showErrorNumber, phoneNumber, "");
   } else if (!validarTelefono(input.target.value)) {
-    inputMessage(showErrorNumber, "*Phone number is not correct");
+    inputMessage(showErrorNumber, phoneNumber, "*Phone number is not correct");
   } else {
-    inputMessage(showErrorNumber, "");
+    inputMessage(showErrorNumber, phoneNumber, "");
   }
 });
 
